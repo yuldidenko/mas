@@ -310,12 +310,15 @@ describe('MasTopNav', () => {
     });
 
     describe('history navigation visuals', () => {
-        it('should render history navigation buttons with forward disabled', async () => {
+        it('should render history navigation buttons wired to window.history', async () => {
             const el = await fixture(html`<mas-top-nav></mas-top-nav>`);
             const buttons = el.querySelectorAll('.history-navigation .history-nav-button');
             expect(buttons.length).to.equal(2);
+            // Both buttons are enabled — back/forward are wired to
+            // window.history.back() / .forward(); the browser itself
+            // handles the no-op when there's no further entry to navigate to.
             expect(buttons[0].hasAttribute('disabled')).to.be.false;
-            expect(buttons[1].hasAttribute('disabled')).to.be.true;
+            expect(buttons[1].hasAttribute('disabled')).to.be.false;
         });
     });
 
